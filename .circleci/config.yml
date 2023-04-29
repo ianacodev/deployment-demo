@@ -12,6 +12,8 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
+          path: .
+          dockerfile: Dockerfile
           image: ianacodev/deployment-demo
       - docker/push:
           image: ianacodev/deployment-demo
