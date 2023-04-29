@@ -3,13 +3,11 @@ version: 2.1
 defaults: &defaults
   docker:
     - image: cimg/node:18.12.1-browsers
-  working_directory: ~/the-bonkers-fantasy-sports
+  working_directory: ~/deployment-demo
 
 orbs:
-  aws-ecr: circleci/aws-ecr@8.1.2
-  kubernetes: circleci/kubernetes@1.3.1
-  aws-cli: circleci/aws-cli@3.1.1
   browser-tools: circleci/browser-tools@1.4.1
+  docker: circleci/docker@2.2.0
 
 jobs:
   # setup
@@ -28,7 +26,7 @@ jobs:
             - ~/.npm
             - ~/.cache
       - persist_to_workspace:
-          root: ~/the-bonkers-fantasy-sports
+          root: ~/deployment-demo
           paths:
             - .
   # lint
@@ -36,7 +34,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/the-bonkers-fantasy-sports
+          at: ~/deployment-demo
       - run:
           name: Lint
           command: npm run lint
@@ -46,7 +44,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/the-bonkers-fantasy-sports
+          at: ~/deployment-demo
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -63,7 +61,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/the-bonkers-fantasy-sports
+          at: ~/deployment-demo
       - restore_cache:
           key: ng-project-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
@@ -75,14 +73,26 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/the-bonkers-fantasy-sports
+          at: ~/deployment-demo
       - run:
           name: Build
           command: npm run build
       - persist_to_workspace:
-          root: ~/the-bonkers-fantasy-sports
+          root: ~/deployment-demo
           paths:
             - .
+
+  # build-docker-image
+  build-docker-and-push-image:
+    <<: *defaults
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - docker/check
+      - docker/build:
+          image: ianacodev/deployment-demo
+      - docker/push:
+          image: ianacodev/deployment-demo
 
 workflows:
   build_deploy_pipeline:
