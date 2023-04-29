@@ -92,7 +92,7 @@ jobs:
       - setup_remote_docker
       - docker/check
       - docker/build:
-          path: /deployment-demo
+          path: /home/circleci/deployment-demo
           image: ianacodev/deployment-demo
       - docker/push:
           image: ianacodev/deployment-demo
