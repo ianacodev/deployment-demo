@@ -7,7 +7,6 @@ jobs:
   # build-and-push-docker-image
   build-and-push-docker-image:
     executor: docker/docker
-    working
     steps:
       - setup_remote_docker
       - checkout
