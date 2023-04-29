@@ -90,6 +90,7 @@ jobs:
       - attach_workspace:
           at: ~/deployment-demo
       - setup_remote_docker
+      - checkout
       - docker/check
       - docker/build:
           path: /home/circleci/deployment-demo
