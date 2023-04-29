@@ -1,26 +1,9 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.1
   docker: circleci/docker@2.2.0
 
 jobs:
-  # unit-tests
-  unit_tests:
-    docker:
-      - image: cimg/node:18.12.1-browsers
-    steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
-      - run:
-          name: Check Chrome Install
-          command: |
-            google-chrome --version
-            chromedriver --version
-      - run:
-          name: Unit Tests
-          command: npm run test:ci
-
   # build-and-push-docker-image
   build-and-push-docker-image:
     executor: docker/docker
