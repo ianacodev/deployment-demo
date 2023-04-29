@@ -10,35 +10,6 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
-  # setup
-  setup:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm ci --force
-      - save_cache:
-          key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-      - persist_to_workspace:
-          root: ~/deployment-demo
-          paths:
-            - .
-  # lint
-  lint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/deployment-demo
-      - run:
-          name: Lint
-          command: npm run lint
-
   # unit-tests
   unit_tests:
     <<: *defaults
@@ -56,32 +27,6 @@ jobs:
           name: Unit Tests
           command: npm run test:ci
 
-  # e2e-tests
-  e2e_tests:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/deployment-demo
-      - restore_cache:
-          key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run:
-          name: E2E Tests
-          command: npm run cypress:ci
-
-  # build
-  build:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/deployment-demo
-      - run:
-          name: Build
-          command: npm run build
-      - persist_to_workspace:
-          root: ~/deployment-demo
-          paths:
-            - .
-
   # build-and-push-docker-image
   build-and-push-docker-image:
     <<: *defaults
@@ -93,7 +38,6 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          path: /home/circleci/deployment-demo
           image: ianacodev/deployment-demo
       - docker/push:
           image: ianacodev/deployment-demo
@@ -101,13 +45,7 @@ jobs:
 workflows:
   build_deploy_pipeline:
     jobs:
-      - setup
       - unit_tests:
-          requires:
-            - setup
-      - build:
-          requires:
-            - unit_tests
       - build-and-push-docker-image:
           requires:
-            - build
+            - unit_tests
