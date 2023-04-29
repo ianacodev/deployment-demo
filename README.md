@@ -1,5 +1,23 @@
 # DeploymentDemo
 
+> ### Sample application to demo deployment concepts
+
+<br> 
+<p>
+This app demonstrates continuous integration, containerization and orchestration.
+</p>
+
+### Includes
+
+<ul>
+  <li>CircleCI</li>
+  <li>Docker</li>
+  <li>Kubernetes</li>
+  <li>Nginx</li>
+  <li>Angular</li>
+</ul>
+<br>
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
 
 ## Development server
