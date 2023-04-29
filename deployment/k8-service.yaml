@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployment-demo
+  labels:
+    owner: ianaco
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: deployment-demo
+  type: NodePort

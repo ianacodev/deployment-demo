@@ -9,4 +9,3 @@ RUN npm run build
 FROM nginx:stable-alpine-perl
 COPY deployment/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-step /app/dist/deployment-demo /usr/share/nginx/html
-EXPOSE 80

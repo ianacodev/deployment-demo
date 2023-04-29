@@ -5,7 +5,7 @@ metadata:
   labels:
     app: deployment-demo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: deployment-demo
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: deployment-demo
-          image: ianacodev/deployment-demo
+          image: ianacodev/deployment-demo:8902b1390981a165e732c347d56cf65163f9d1d8
           ports:
             - containerPort: 80
