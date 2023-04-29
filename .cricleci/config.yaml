@@ -1,0 +1,72 @@
+version: 2.1
+
+defaults: &defaults
+  docker:
+    -image: cimg/node:lts-browsers
+  working_directory: ~/deployment-demo
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.1
+
+jobs:
+  #setup
+  setup:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }
+      - run:
+        name: Install Dependencies
+        command: npm ci
+      - save_cache:
+        key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+        paths:
+          - ~/.npm
+          - ~/.cache
+      - persist_to_workspace:
+          root: ~/deployment-demo
+          paths:
+            - .
+
+  #unit_tests
+  unit_tests:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/the-bonkers-fantasy-sports
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          name: Check Chrome Install
+          command: |
+            google-chrome --version
+            chromedriver --version
+      - run:
+          name: Unit Tests
+          command: npm run test:ci
+
+  # build
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/deployment-demo
+      - run:
+          name: Build
+          command: npm run build
+      - persist_to_workspace:
+          root: ~/deployment-demo
+          paths:
+            - .
+
+workflows:
+  build_deploy_pipeline:
+    jobs:
+      - setup
+      - unit_tests:
+          requires:
+            - setup
+      - build:
+          requires:
+            - unit_tests
