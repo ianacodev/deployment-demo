@@ -1,10 +1,5 @@
 version: 2.1
 
-defaults: &defaults
-  docker:
-    - image: cimg/node:18.12.1-browsers
-  working_directory: ~/deployment-demo
-
 orbs:
   browser-tools: circleci/browser-tools@1.4.1
   docker: circleci/docker@2.2.0
@@ -12,10 +7,9 @@ orbs:
 jobs:
   # unit-tests
   unit_tests:
-    <<: *defaults
+    docker:
+      - image: cimg/node:18.12.1-browsers
     steps:
-      - attach_workspace:
-          at: ~/deployment-demo
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -29,11 +23,8 @@ jobs:
 
   # build-and-push-docker-image
   build-and-push-docker-image:
-    <<: *defaults
     executor: docker/docker
     steps:
-      - attach_workspace:
-          at: ~/deployment-demo
       - setup_remote_docker
       - checkout
       - docker/check
@@ -45,7 +36,7 @@ jobs:
 workflows:
   build_deploy_pipeline:
     jobs:
-      - unit_tests:
+      - unit_tests
       - build-and-push-docker-image:
           requires:
             - unit_tests
