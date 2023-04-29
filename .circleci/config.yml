@@ -92,6 +92,7 @@ jobs:
       - setup_remote_docker
       - docker/check
       - docker/build:
+          dockerfiles: ./Dockerfile
           image: ianacodev/deployment-demo
       - docker/push:
           image: ianacodev/deployment-demo
