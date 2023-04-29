@@ -17,9 +17,6 @@ jobs:
           image: ianacodev/deployment-demo
 
 workflows:
-  build_deploy_pipeline:
+  deploy_pipeline:
     jobs:
-      - unit_tests
-      - build-and-push-docker-image:
-          requires:
-            - unit_tests
+      - build-and-push-docker-image
