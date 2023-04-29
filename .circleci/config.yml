@@ -13,9 +13,9 @@ jobs:
       - docker/check
       - docker/build:
           dockerfile: dockerfile
-          image: ianacodev/deployment-demo
+          image: $DOCKER_LOGIN/$DOCKER_REPO_NAME
       - docker/push:
-          image: ianacodev/deployment-demo
+          image: $DOCKER_LOGIN/$DOCKER_REPO_NAME
 
 workflows:
   deploy_pipeline:
