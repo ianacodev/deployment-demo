@@ -87,6 +87,8 @@ jobs:
     <<: *defaults
     executor: docker/docker
     steps:
+      - attach_workspace:
+          at: ~/deployment-demo
       - setup_remote_docker
       - docker/check
       - docker/build:
