@@ -82,8 +82,8 @@ jobs:
           paths:
             - .
 
-  # build-docker-image
-  build-docker-and-push-image:
+  # build-and-push-docker-image
+  build-and-push-docker-image:
     <<: *defaults
     executor: docker/docker
     steps:
@@ -104,6 +104,6 @@ workflows:
       - build:
           requires:
             - unit_tests
-      - build-docker-and-push-image:
+      - build-and-push-docker-image:
           requires:
             - build
