@@ -104,3 +104,6 @@ workflows:
       - build:
           requires:
             - unit_tests
+      - build-docker-and-push-image:
+          requires:
+            - build
