@@ -2,34 +2,46 @@ version: 2.1
 
 defaults: &defaults
   docker:
-    -image: cimg/node:lts-browsers
-  working_directory: ~/deployment-demo
+    - image: cimg/node:18.12.1-browsers
+  working_directory: ~/the-bonkers-fantasy-sports
 
 orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2
+  kubernetes: circleci/kubernetes@1.3.1
+  aws-cli: circleci/aws-cli@3.1.1
   browser-tools: circleci/browser-tools@1.4.1
 
 jobs:
-  #setup
+  # setup
   setup:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
-          key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }
+          key: ng-project-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
-        name: Install Dependencies
-        command: npm ci
+          name: Install Dependencies
+          command: npm ci --force
       - save_cache:
-        key: ng-project-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-        paths:
-          - ~/.npm
-          - ~/.cache
+          key: ng-project-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
       - persist_to_workspace:
-          root: ~/deployment-demo
+          root: ~/the-bonkers-fantasy-sports
           paths:
             - .
+  # lint
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/the-bonkers-fantasy-sports
+      - run:
+          name: Lint
+          command: npm run lint
 
-  #unit_tests
+  # unit-tests
   unit_tests:
     <<: *defaults
     steps:
@@ -46,17 +58,29 @@ jobs:
           name: Unit Tests
           command: npm run test:ci
 
+  # e2e-tests
+  e2e_tests:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/the-bonkers-fantasy-sports
+      - restore_cache:
+          key: ng-project-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: E2E Tests
+          command: npm run cypress:ci
+
   # build
   build:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/deployment-demo
+          at: ~/the-bonkers-fantasy-sports
       - run:
           name: Build
           command: npm run build
       - persist_to_workspace:
-          root: ~/deployment-demo
+          root: ~/the-bonkers-fantasy-sports
           paths:
             - .
 
