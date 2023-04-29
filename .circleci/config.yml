@@ -7,13 +7,14 @@ jobs:
   # build-and-push-docker-image
   build-and-push-docker-image:
     executor: docker/docker
+    working
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           path: .
-          dockerfile: Dockerfile
+          dockerfile: dockerfile
           image: ianacodev/deployment-demo
       - docker/push:
           image: ianacodev/deployment-demo
