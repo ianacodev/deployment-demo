@@ -57,6 +57,6 @@ Also used Docker Desktop with Kubernetes and have made the docker repo publicly 
 
 - Deployment
 
-  - Docker Desktop With Kubernetes
+  - Docker Desktop With Kubernetes & kubectl
   - `kubectl apply -f deployment/k8-deployment.yaml`
   - `kubectl apply -f deployment/k8-service.yaml`
