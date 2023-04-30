@@ -19,6 +19,10 @@ export class AppComponent {
       image: `${imageAssetUrl}/angular.webp`,
     },
     {
+      name: 'circleci',
+      image: `${imageAssetUrl}/circleci.webp`,
+    },
+    {
       name: 'docker',
       image: `${imageAssetUrl}/docker.webp`,
     },

@@ -7,39 +7,39 @@
 This app demonstrates continuous integration, containerization and orchestration.
 </p>
 
+<img src="./src/assets/images/deployment_demo.jpg">
+
 ### Includes
 
 <ul>
+  <li>Angular</li>
   <li>CircleCI</li>
   <li>Docker</li>
   <li>Kubernetes</li>
   <li>Nginx</li>
-  <li>Angular</li>
 </ul>
 <br>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
+# Deploying Angular application on Kubernetes
 
-## Development server
+## Step 1:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Create angular application.
 
-## Code scaffolding
+<br>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Step 2:
 
-## Build
+### Create Dockerfile with multi-stage build for application build and nginx server.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<br>
 
-## Running unit tests
+## Step 3:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Create circleci config to build and push docker image to dockerhub.
 
-## Running end-to-end tests
+<br>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Step 4:
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Create K8s deployment and service manifest.

@@ -6,8 +6,6 @@ metadata:
   name: service-name-loadbalancer
 spec:
   type: LoadBalancer
-  externalIPs:
-    - 192.168.0.10
   ports:
     - name: service-port-name
       port: 80
