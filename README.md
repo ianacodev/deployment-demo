@@ -1,15 +1,18 @@
-# DeploymentDemo
+# Deployment Demo
 
 > ### Sample application to demo deployment concepts
 
-<br> 
+<br>
+
+<img src="./src/assets/images/deployment_demo.jpg">
+
+<br>
+
 <p>
 This app demonstrates continuous integration, containerization and orchestration.
 </p>
 
-<img src="./src/assets/images/deployment_demo.jpg">
-
-### Includes
+### Utilizes:
 
 <ul>
   <li>Angular</li>
@@ -18,28 +21,27 @@ This app demonstrates continuous integration, containerization and orchestration
   <li>Kubernetes</li>
   <li>Nginx</li>
 </ul>
-<br>
 
-# Deploying Angular application on Kubernetes
+<p>
+Also used Docker Desktop with Kubernetes and have made the docker repo publicly available:
+</p>
 
-## Step 1:
+<a href="https://hub.docker.com/r/ianacodev/deployment-demo" target=_blank>ianacodev/deployment-demo</a>
 
-### Create angular application.
+## Deploying Angular application on Kubernetes
 
-<br>
+### Step 1:
 
-## Step 2:
+- Create angular application.
 
-### Create Dockerfile with multi-stage build for application build and nginx server.
+### Step 2:
 
-<br>
+- Create Dockerfile with multi-stage build for application build and nginx server.
 
-## Step 3:
+### Step 3:
 
-### Create circleci config to build and push docker image to dockerhub.
+- Create circleci config to build and push docker image to dockerhub.
 
-<br>
+### Step 4:
 
-## Step 4:
-
-### Create K8s deployment and service manifest.
+- Create K8s deployment and service manifest.
