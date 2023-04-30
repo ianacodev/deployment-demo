@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: deployment-demo
-          image: hello-world
+          image: ianacodev/deployment-demo:b76ea5ec275cdf0c49c0bc0d18d0254c560179ad
           ports:
             - containerPort: 80

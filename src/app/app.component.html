@@ -1,5 +1,15 @@
 <div class="app">
-  <main>
-    <h1>{{ title }} app is running!</h1>
+  <header class="app__header">
+    <h1 class="app__title">
+      {{ title }}
+    </h1>
+    <h3 class="app__subtitle">tech stack</h3>
+  </header>
+  <main class="app__main">
+    <div class="app__item-container">
+      <div class="app__item" *ngFor="let item of items">
+        <img class="app__item-image" [src]="item.image" [alt]="item.name" />
+      </div>
+    </div>
   </main>
 </div>
