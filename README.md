@@ -38,10 +38,25 @@ Also used Docker Desktop with Kubernetes and have made the docker repo publicly 
 
 - Create Dockerfile with multi-stage build for application build and nginx server.
 
+  - `Dockerfile`
+
 ### Step 3:
 
 - Create circleci config to build and push docker image to dockerhub.
 
+  - `.circleci/config.yml`
+
 ### Step 4:
 
 - Create K8s deployment and service manifest.
+
+  - `deployment/k8-deployment.yaml`
+  - `deployment/k8-service.yaml`
+
+### Step 5:
+
+- Deployment
+
+  - Docker Desktop With Kubernetes
+  - `kubectl apply -f deployment/k8-deployment.yaml`
+  - `kubectl apply -f deployment/k8-deployment.yaml`
