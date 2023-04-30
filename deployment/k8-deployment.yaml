@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
         - name: deployment-demo
-          image: ianacodev/deployment-demo:b76ea5ec275cdf0c49c0bc0d18d0254c560179ad
+          image: ianacodev/deployment-demo:c59756fe537da6bced0fedc6fe8c4d35a6367a9b
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
